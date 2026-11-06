@@ -3,7 +3,7 @@
 
 | | |
 |---|---|
-| Repositorio | `<URL del repositorio GitHub>` |
+| Repositorio |  https://github.com/joselynmartinez729-ctrl/novarent-cln |
 | Sistema desplegado / Swagger UI | `<URL de Render/Railway>/docs` |
 
 Solución de software que implementa las reglas del BRD de NovaRent: reservación por categoría, validación de documentos, entrega con inspección digital y depósito en garantía, devolución con **cargos automáticos** (retraso, combustible, kilometraje), compensación de categoría (upgrade / downgrade 20 %) y ciclo de vida del vehículo (En revisión → Limpieza → Disponible).
@@ -75,5 +75,3 @@ Datos de demo: `RES-001` (Económico, hay stock) · `RES-002` (Sedán → upgrad
 - **Alcance:** las 17 historias están implementadas. US08, US09, US14 y US15 estaban fuera de los 5 casos de uso de la U3 y se agregaron después. Limitaciones y supuestos (sin login, PIN por variable de entorno, etc.): `docs/SUPUESTOS.md`.
 - Diferencias con el paquete de datos genérico del docente: [`docs/DIFERENCIAS_CON_EL_ZIP_DEL_DOCENTE.md`](docs/DIFERENCIAS_CON_EL_ZIP_DEL_DOCENTE.md)
 
-## Reparto del equipo
-<!-- Completar con nombres y commits de cada integrante -->

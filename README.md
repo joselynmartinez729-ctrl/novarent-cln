@@ -4,7 +4,7 @@
 | | |
 |---|---|
 | Repositorio |  https://github.com/joselynmartinez729-ctrl/novarent-cln |
-| Sistema desplegado / Swagger UI | `<URL de Render/Railway>/docs` |
+| Sistema desplegado / Swagger UI | https://novarent-cln.onrender.com/docs#/ |
 
 Solución de software que implementa las reglas del BRD de NovaRent: reservación por categoría, validación de documentos, entrega con inspección digital y depósito en garantía, devolución con **cargos automáticos** (retraso, combustible, kilometraje), compensación de categoría (upgrade / downgrade 20 %) y ciclo de vida del vehículo (En revisión → Limpieza → Disponible).
 Componentes del curso: **DDD** (3 Aggregates, Value Objects, Domain Services, Domain Events) · **Specification** (AND/OR/NOT) · **State Machine** (Vehículo) · **Service Layer + Repository + Unit of Work + CQRS básico** · **API REST con OpenAPI**.

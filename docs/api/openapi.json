@@ -1,0 +1,1057 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NovaRent API",
+    "description": "Renta de autos por día: reservación, entrega, devolución con cargos automáticos y ciclo de vida del vehículo (DDD + Specification + State Machine).",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Sistema"
+        ],
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservaciones/{reservacion_id}": {
+      "get": {
+        "tags": [
+          "Reservaciones"
+        ],
+        "summary": "Obtener Reservacion",
+        "operationId": "obtener_reservacion_reservaciones__reservacion_id__get",
+        "parameters": [
+          {
+            "name": "reservacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reservacion Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservaciones/{reservacion_id}/validar-documentacion": {
+      "post": {
+        "tags": [
+          "Reservaciones"
+        ],
+        "summary": "CU-02: valida edad, licencia e identificación (US10)",
+        "operationId": "validar_documentacion_reservaciones__reservacion_id__validar_documentacion_post",
+        "parameters": [
+          {
+            "name": "reservacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reservacion Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentacionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservaciones/{reservacion_id}/oferta-compensacion": {
+      "get": {
+        "tags": [
+          "Reservaciones"
+        ],
+        "summary": "Query CU-03: oferta de upgrade/downgrade (US03)",
+        "operationId": "oferta_reservaciones__reservacion_id__oferta_compensacion_get",
+        "parameters": [
+          {
+            "name": "reservacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reservacion Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservaciones/{reservacion_id}/compensacion": {
+      "post": {
+        "tags": [
+          "Reservaciones"
+        ],
+        "summary": "CU-03: resuelve categoría no disponible (upgrade, downgrade 20 % o cancelación)",
+        "operationId": "compensacion_reservaciones__reservacion_id__compensacion_post",
+        "parameters": [
+          {
+            "name": "reservacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reservacion Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionIn",
+                "default": {
+                  "acepta_upgrade": true,
+                  "acepta_inferior": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservaciones/{reservacion_id}/entrega": {
+      "post": {
+        "tags": [
+          "Contratos"
+        ],
+        "summary": "CU-01: entrega el vehículo y crea el contrato (US05, US12)",
+        "operationId": "entregar_reservaciones__reservacion_id__entrega_post",
+        "parameters": [
+          {
+            "name": "reservacion_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Reservacion Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntregaIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contratos/{contrato_id}/devolucion": {
+      "post": {
+        "tags": [
+          "Contratos"
+        ],
+        "summary": "CU-04: registra la devolución y calcula cargos (US04, US06, US07)",
+        "operationId": "devolver_contratos__contrato_id__devolucion_post",
+        "parameters": [
+          {
+            "name": "contrato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Contrato Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DevolucionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contratos/{contrato_id}/cargos": {
+      "get": {
+        "tags": [
+          "Contratos"
+        ],
+        "summary": "Query: resumen de cargos extra",
+        "operationId": "cargos_contratos__contrato_id__cargos_get",
+        "parameters": [
+          {
+            "name": "contrato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Contrato Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contratos/{contrato_id}/extension": {
+      "post": {
+        "tags": [
+          "Contratos"
+        ],
+        "summary": "US09: extiende la renta (≥ 6 h de anticipación, auto no reservado); cobra por adelantado",
+        "operationId": "extender_contratos__contrato_id__extension_post",
+        "parameters": [
+          {
+            "name": "contrato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Contrato Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExtensionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contratos/{contrato_id}/cargos/{indice}/cancelacion": {
+      "post": {
+        "tags": [
+          "Contratos"
+        ],
+        "summary": "US08: cancela un cargo extra (solo Administración con PIN válido)",
+        "operationId": "cancelar_cargo_contratos__contrato_id__cargos__indice__cancelacion_post",
+        "parameters": [
+          {
+            "name": "contrato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Contrato Id"
+            }
+          },
+          {
+            "name": "indice",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Indice"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelacionCargoIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contratos/{contrato_id}/cargos/danos": {
+      "post": {
+        "tags": [
+          "Contratos"
+        ],
+        "summary": "Cobra daños nuevos detectados en la devolución (S-3: monto capturado por el agente)",
+        "operationId": "cargo_por_danos_contratos__contrato_id__cargos_danos_post",
+        "parameters": [
+          {
+            "name": "contrato_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Contrato Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CargoPorDanosIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reportes/tasa-de-utilizacion": {
+      "get": {
+        "tags": [
+          "Reportes"
+        ],
+        "summary": "US14: Tasa de Utilización = autos rentados ÷ flota total (foto actual)",
+        "operationId": "tasa_de_utilizacion_reportes_tasa_de_utilizacion_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reportes/ingresos-por-cargos": {
+      "get": {
+        "tags": [
+          "Reportes"
+        ],
+        "summary": "US15: Ingresos por Cargos Adicionales de una semana (lunes a domingo)",
+        "operationId": "ingresos_por_cargos_reportes_ingresos_por_cargos_get",
+        "parameters": [
+          {
+            "name": "desde",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Lunes de la semana; por defecto la semana en curso",
+              "title": "Desde"
+            },
+            "description": "Lunes de la semana; por defecto la semana en curso"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehiculos": {
+      "get": {
+        "tags": [
+          "Vehículos"
+        ],
+        "summary": "Query: panel en vivo de vehículos (N2)",
+        "operationId": "panel_vehiculos_get",
+        "parameters": [
+          {
+            "name": "categoria",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "ECONOMICO, COMPACTO, SEDAN, SUV o LUJO",
+              "title": "Categoria"
+            },
+            "description": "ECONOMICO, COMPACTO, SEDAN, SUV o LUJO"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehiculos/{vehiculo_id}/limpieza/iniciar": {
+      "post": {
+        "tags": [
+          "Vehículos"
+        ],
+        "summary": "EN_REVISION → LIMPIEZA",
+        "operationId": "iniciar_limpieza_vehiculos__vehiculo_id__limpieza_iniciar_post",
+        "parameters": [
+          {
+            "name": "vehiculo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vehiculo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehiculos/{vehiculo_id}/limpieza/terminado": {
+      "post": {
+        "tags": [
+          "Vehículos"
+        ],
+        "summary": "CU-05: casilla 'Terminado' → DISPONIBLE (US11)",
+        "operationId": "terminado_vehiculos__vehiculo_id__limpieza_terminado_post",
+        "parameters": [
+          {
+            "name": "vehiculo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vehiculo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vehiculos/{vehiculo_id}/mantenimiento-mayor": {
+      "post": {
+        "tags": [
+          "Vehículos"
+        ],
+        "summary": "CU-05: reporta Mantenimiento Mayor y cargo retroactivo (US13)",
+        "operationId": "mantenimiento_mayor_vehiculos__vehiculo_id__mantenimiento_mayor_post",
+        "parameters": [
+          {
+            "name": "vehiculo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Vehiculo Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MantenimientoMayorIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CancelacionCargoIn": {
+        "properties": {
+          "rol": {
+            "type": "string",
+            "enum": [
+              "AGENTE",
+              "PATIO",
+              "LIMPIEZA",
+              "ADMINISTRACION"
+            ],
+            "title": "Rol"
+          },
+          "pin": {
+            "type": "string",
+            "title": "Pin"
+          },
+          "motivo": {
+            "type": "string",
+            "minLength": 3,
+            "title": "Motivo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rol",
+          "pin",
+          "motivo"
+        ],
+        "title": "CancelacionCargoIn"
+      },
+      "CargoPorDanosIn": {
+        "properties": {
+          "monto_mxn": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              }
+            ],
+            "title": "Monto Mxn"
+          },
+          "descripcion": {
+            "type": "string",
+            "title": "Descripcion",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "monto_mxn"
+        ],
+        "title": "CargoPorDanosIn"
+      },
+      "DecisionIn": {
+        "properties": {
+          "acepta_upgrade": {
+            "type": "boolean",
+            "title": "Acepta Upgrade",
+            "default": true
+          },
+          "acepta_inferior": {
+            "type": "boolean",
+            "title": "Acepta Inferior",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "DecisionIn"
+      },
+      "DevolucionIn": {
+        "properties": {
+          "hora_devolucion": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Hora Devolucion"
+          },
+          "inspeccion_devolucion": {
+            "$ref": "#/components/schemas/InspeccionIn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "hora_devolucion",
+          "inspeccion_devolucion"
+        ],
+        "title": "DevolucionIn"
+      },
+      "DocumentacionIn": {
+        "properties": {
+          "titular": {
+            "type": "string",
+            "title": "Titular"
+          },
+          "fecha_nacimiento": {
+            "type": "string",
+            "format": "date",
+            "title": "Fecha Nacimiento"
+          },
+          "licencia_vigente_hasta": {
+            "type": "string",
+            "format": "date",
+            "title": "Licencia Vigente Hasta"
+          },
+          "identificacion_vigente_hasta": {
+            "type": "string",
+            "format": "date",
+            "title": "Identificacion Vigente Hasta"
+          }
+        },
+        "type": "object",
+        "required": [
+          "titular",
+          "fecha_nacimiento",
+          "licencia_vigente_hasta",
+          "identificacion_vigente_hasta"
+        ],
+        "title": "DocumentacionIn"
+      },
+      "EntregaIn": {
+        "properties": {
+          "ultimos_4": {
+            "type": "string",
+            "maxLength": 4,
+            "minLength": 4,
+            "pattern": "^\\d{4}$",
+            "title": "Ultimos 4"
+          },
+          "titular": {
+            "type": "string",
+            "title": "Titular"
+          },
+          "inspeccion_salida": {
+            "$ref": "#/components/schemas/InspeccionIn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ultimos_4",
+          "titular",
+          "inspeccion_salida"
+        ],
+        "title": "EntregaIn"
+      },
+      "ExtensionIn": {
+        "properties": {
+          "nuevo_fin": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Nuevo Fin"
+          },
+          "vehiculo_reservado_por_otro": {
+            "type": "boolean",
+            "title": "Vehiculo Reservado Por Otro",
+            "description": "El agente verifica si otro cliente tiene reservado el vehículo (S-15)",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "nuevo_fin"
+        ],
+        "title": "ExtensionIn"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InspeccionIn": {
+        "properties": {
+          "esquema_completado": {
+            "type": "boolean",
+            "title": "Esquema Completado"
+          },
+          "fotos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fotos",
+            "description": "URLs o nombres de fotografías"
+          },
+          "kilometraje": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Kilometraje"
+          },
+          "combustible": {
+            "type": "string",
+            "enum": [
+              "vacio",
+              "1/4",
+              "1/2",
+              "3/4",
+              "lleno"
+            ],
+            "title": "Combustible"
+          },
+          "danos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Danos",
+            "description": "Zonas marcadas en el esquema digital"
+          }
+        },
+        "type": "object",
+        "required": [
+          "esquema_completado",
+          "kilometraje",
+          "combustible"
+        ],
+        "title": "InspeccionIn"
+      },
+      "MantenimientoMayorIn": {
+        "properties": {
+          "motivo": {
+            "type": "string",
+            "title": "Motivo"
+          },
+          "monto_mxn": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              }
+            ],
+            "title": "Monto Mxn"
+          }
+        },
+        "type": "object",
+        "required": [
+          "motivo",
+          "monto_mxn"
+        ],
+        "title": "MantenimientoMayorIn"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

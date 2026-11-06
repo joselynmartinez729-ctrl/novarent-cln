@@ -1,0 +1,111 @@
+caso_id,tipo_prueba,regla,escenario,entrada_json,resultado_esperado
+NR-DOC-001,documentacion,RN-01,Adulto con documentos vigentes,"{""nacimiento"": ""1995-03-10"", ""licencia"": ""2029-01-01"", ""identificacion"": ""2030-01-01""}",VALIDA
+NR-DOC-002,documentacion,RN-01,Cumple exactamente 18 años hoy,"{""nacimiento"": ""2008-11-05"", ""licencia"": ""2029-01-01"", ""identificacion"": ""2030-01-01""}",VALIDA
+NR-DOC-003,documentacion,RN-01,Cumple 18 años mañana,"{""nacimiento"": ""2008-11-06"", ""licencia"": ""2029-01-01"", ""identificacion"": ""2030-01-01""}",INVALIDA
+NR-DOC-004,documentacion,RN-01,Menor de edad,"{""nacimiento"": ""2012-01-01"", ""licencia"": ""2029-01-01"", ""identificacion"": ""2030-01-01""}",INVALIDA
+NR-DOC-005,documentacion,RN-01,Licencia vence hoy,"{""nacimiento"": ""1995-03-10"", ""licencia"": ""2026-11-05"", ""identificacion"": ""2030-01-01""}",VALIDA
+NR-DOC-006,documentacion,RN-01,Licencia venció ayer,"{""nacimiento"": ""1995-03-10"", ""licencia"": ""2026-11-04"", ""identificacion"": ""2030-01-01""}",INVALIDA
+NR-DOC-007,documentacion,RN-01,Identificación vence hoy,"{""nacimiento"": ""1995-03-10"", ""licencia"": ""2029-01-01"", ""identificacion"": ""2026-11-05""}",VALIDA
+NR-DOC-008,documentacion,RN-01,Identificación vencida,"{""nacimiento"": ""1995-03-10"", ""licencia"": ""2029-01-01"", ""identificacion"": ""2026-01-01""}",INVALIDA
+NR-DOC-009,documentacion,RN-01,Licencia e identificación vencidas,"{""nacimiento"": ""1995-03-10"", ""licencia"": ""2025-01-01"", ""identificacion"": ""2025-06-01""}",INVALIDA
+NR-DOC-010,documentacion,RN-01,Menor y licencia vencida,"{""nacimiento"": ""2015-05-05"", ""licencia"": ""2025-01-01"", ""identificacion"": ""2030-01-01""}",INVALIDA
+NR-RET-001,retencion,RN-02,Pago inicial 900,"{""pago_inicial"": ""900""}",90.00
+NR-RET-002,retencion,RN-02,Pago inicial 1000,"{""pago_inicial"": ""1000""}",100.00
+NR-RET-003,retencion,RN-02,Pago inicial 1234.50,"{""pago_inicial"": ""1234.50""}",123.45
+NR-RET-004,retencion,RN-02,Pago inicial 450,"{""pago_inicial"": ""450""}",45.00
+NR-RET-001,retraso,RN-08,"-30 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": -30}",0.00
+NR-RET-002,retraso,RN-08,"0 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 0}",0.00
+NR-RET-003,retraso,RN-08,"60 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 60}",0.00
+NR-RET-004,retraso,RN-08,"120 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 120}",0.00
+NR-RET-005,retraso,RN-08,"121 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 121}",90.00
+NR-RET-006,retraso,RN-08,"150 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 150}",90.00
+NR-RET-007,retraso,RN-08,"180 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 180}",90.00
+NR-RET-008,retraso,RN-08,"181 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 181}",180.00
+NR-RET-009,retraso,RN-08,"240 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 240}",180.00
+NR-RET-010,retraso,RN-08,"241 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 241}",450.00
+NR-RET-011,retraso,RN-08,"300 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 300}",450.00
+NR-RET-012,retraso,RN-08,"1440 min de retraso, tarifa 450","{""tarifa"": ""450"", ""minutos"": 1440}",450.00
+NR-RET-013,retraso,RN-08,"121 min de retraso, tarifa 700","{""tarifa"": ""700"", ""minutos"": 121}",140.00
+NR-RET-014,retraso,RN-08,"200 min de retraso, tarifa 700","{""tarifa"": ""700"", ""minutos"": 200}",280.00
+NR-RET-015,retraso,RN-08,"240 min de retraso, tarifa 700","{""tarifa"": ""700"", ""minutos"": 240}",280.00
+NR-RET-016,retraso,RN-08,"250 min de retraso, tarifa 700","{""tarifa"": ""700"", ""minutos"": 250}",700.00
+NR-COM-001,combustible,RN-09,"Tanque 40 L, $24.50/L, de 4/4 a 4/4","{""capacidad"": 40, ""precio_litro"": ""24.50"", ""salida"": 4, ""devolucion"": 4}",0.00
+NR-COM-002,combustible,RN-09,"Tanque 40 L, $24.50/L, de 4/4 a 3/4","{""capacidad"": 40, ""precio_litro"": ""24.50"", ""salida"": 4, ""devolucion"": 3}",345.00
+NR-COM-003,combustible,RN-09,"Tanque 40 L, $24.50/L, de 4/4 a 2/4","{""capacidad"": 40, ""precio_litro"": ""24.50"", ""salida"": 4, ""devolucion"": 2}",590.00
+NR-COM-004,combustible,RN-09,"Tanque 40 L, $24.50/L, de 4/4 a 0/4","{""capacidad"": 40, ""precio_litro"": ""24.50"", ""salida"": 4, ""devolucion"": 0}",1080.00
+NR-COM-005,combustible,RN-09,"Tanque 40 L, $24.50/L, de 2/4 a 1/4","{""capacidad"": 40, ""precio_litro"": ""24.50"", ""salida"": 2, ""devolucion"": 1}",345.00
+NR-COM-006,combustible,RN-09,"Tanque 40 L, $24.50/L, de 2/4 a 3/4","{""capacidad"": 40, ""precio_litro"": ""24.50"", ""salida"": 2, ""devolucion"": 3}",0.00
+NR-COM-007,combustible,RN-09,"Tanque 40 L, $24.50/L, de 3/4 a 3/4","{""capacidad"": 40, ""precio_litro"": ""24.50"", ""salida"": 3, ""devolucion"": 3}",0.00
+NR-COM-008,combustible,RN-09,"Tanque 65 L, $25/L, de 4/4 a 3/4","{""capacidad"": 65, ""precio_litro"": ""25"", ""salida"": 4, ""devolucion"": 3}",506.25
+NR-COM-009,combustible,RN-09,"Tanque 50 L, $24.50/L, de 4/4 a 3/4","{""capacidad"": 50, ""precio_litro"": ""24.50"", ""salida"": 4, ""devolucion"": 3}",406.25
+NR-KIL-001,kilometraje,RN-10,"48 h de renta, km 1000→1500","{""horas_renta"": 48, ""km_salida"": 1000, ""km_devolucion"": 1500}",0.00
+NR-KIL-002,kilometraje,RN-10,"48 h de renta, km 1000→1501","{""horas_renta"": 48, ""km_salida"": 1000, ""km_devolucion"": 1501}",5.00
+NR-KIL-003,kilometraje,RN-10,"48 h de renta, km 1000→1700","{""horas_renta"": 48, ""km_salida"": 1000, ""km_devolucion"": 1700}",1000.00
+NR-KIL-004,kilometraje,RN-10,"24 h de renta, km 0→250","{""horas_renta"": 24, ""km_salida"": 0, ""km_devolucion"": 250}",0.00
+NR-KIL-005,kilometraje,RN-10,"24 h de renta, km 0→251","{""horas_renta"": 24, ""km_salida"": 0, ""km_devolucion"": 251}",5.00
+NR-KIL-006,kilometraje,RN-10,"72 h de renta, km 100→900","{""horas_renta"": 72, ""km_salida"": 100, ""km_devolucion"": 900}",250.00
+NR-KIL-007,kilometraje,RN-10,"72 h de renta, km 100→850","{""horas_renta"": 72, ""km_salida"": 100, ""km_devolucion"": 850}",0.00
+NR-KIL-008,kilometraje,RN-10,"49 h de renta, km 1000→1600","{""horas_renta"": 49, ""km_salida"": 1000, ""km_devolucion"": 1600}",0.00
+NR-KIL-009,kilometraje,RN-10,"49 h de renta, km 1000→1800","{""horas_renta"": 49, ""km_salida"": 1000, ""km_devolucion"": 1800}",250.00
+NR-KIL-010,kilometraje,RN-10,"3 h de renta, km 0→260","{""horas_renta"": 3, ""km_salida"": 0, ""km_devolucion"": 260}",50.00
+NR-KIL-011,kilometraje,RN-10,"48 h de renta, km 1000→1000","{""horas_renta"": 48, ""km_salida"": 1000, ""km_devolucion"": 1000}",0.00
+NR-KIL-012,kilometraje,RN-10,"48 h de renta, km 1000→900","{""horas_renta"": 48, ""km_salida"": 1000, ""km_devolucion"": 900}",KM_INVALIDO
+NR-COM-001,compensacion,RN-06,Hay unidades en la categoría,"{""hay_en_categoria"": true, ""hay_superior"": true, ""hay_inferior"": true, ""tarifa_reservada"": ""700"", ""tarifa_inferior"": ""550"", ""rechaza_upgrade"": false}",NO_REQUIERE
+NR-COM-002,compensacion,RN-06,Upgrade gratuito (tarifa se mantiene),"{""hay_en_categoria"": false, ""hay_superior"": true, ""hay_inferior"": true, ""tarifa_reservada"": ""700"", ""tarifa_inferior"": ""550"", ""rechaza_upgrade"": false}",UPGRADE|700.00
+NR-COM-003,compensacion,RN-06,Upgrade en categoría de lujo,"{""hay_en_categoria"": false, ""hay_superior"": true, ""hay_inferior"": false, ""tarifa_reservada"": ""1400"", ""tarifa_inferior"": ""950"", ""rechaza_upgrade"": false}",UPGRADE|1400.00
+NR-COM-004,compensacion,RN-07,Rechaza upgrade → downgrade 550,"{""hay_en_categoria"": false, ""hay_superior"": true, ""hay_inferior"": true, ""tarifa_reservada"": ""700"", ""tarifa_inferior"": ""550"", ""rechaza_upgrade"": true}",DOWNGRADE|440.00
+NR-COM-005,compensacion,RN-07,Sin superior → downgrade 550,"{""hay_en_categoria"": false, ""hay_superior"": false, ""hay_inferior"": true, ""tarifa_reservada"": ""700"", ""tarifa_inferior"": ""550"", ""rechaza_upgrade"": false}",DOWNGRADE|440.00
+NR-COM-006,compensacion,RN-07,Sin superior → downgrade 1000,"{""hay_en_categoria"": false, ""hay_superior"": false, ""hay_inferior"": true, ""tarifa_reservada"": ""1400"", ""tarifa_inferior"": ""1000"", ""rechaza_upgrade"": false}",DOWNGRADE|800.00
+NR-COM-007,compensacion,RN-07,Sin superior → downgrade 450,"{""hay_en_categoria"": false, ""hay_superior"": false, ""hay_inferior"": true, ""tarifa_reservada"": ""550"", ""tarifa_inferior"": ""450"", ""rechaza_upgrade"": false}",DOWNGRADE|360.00
+NR-COM-008,compensacion,RN-07,Sin alternativas,"{""hay_en_categoria"": false, ""hay_superior"": false, ""hay_inferior"": false, ""tarifa_reservada"": ""700"", ""tarifa_inferior"": ""550"", ""rechaza_upgrade"": false}",SIN_OFERTA
+NR-COM-009,compensacion,RN-07,Rechaza upgrade y no hay inferior,"{""hay_en_categoria"": false, ""hay_superior"": true, ""hay_inferior"": false, ""tarifa_reservada"": ""700"", ""tarifa_inferior"": ""550"", ""rechaza_upgrade"": true}",SIN_OFERTA
+NR-EXT-001,extension,RN-12,"Aviso 600 min antes, reservado=False, 24 h extra","{""anticipacion_min"": 600, ""reservado"": false, ""horas_extra"": 24, ""tarifa"": ""450""}",PERMITIDA|450.00
+NR-EXT-002,extension,RN-12,"Aviso 360 min antes, reservado=False, 24 h extra","{""anticipacion_min"": 360, ""reservado"": false, ""horas_extra"": 24, ""tarifa"": ""450""}",PERMITIDA|450.00
+NR-EXT-003,extension,RN-12,"Aviso 359 min antes, reservado=False, 24 h extra","{""anticipacion_min"": 359, ""reservado"": false, ""horas_extra"": 24, ""tarifa"": ""450""}",RECHAZADA
+NR-EXT-004,extension,RN-12,"Aviso 600 min antes, reservado=True, 24 h extra","{""anticipacion_min"": 600, ""reservado"": true, ""horas_extra"": 24, ""tarifa"": ""450""}",RECHAZADA
+NR-EXT-005,extension,RN-12,"Aviso 600 min antes, reservado=False, 48 h extra","{""anticipacion_min"": 600, ""reservado"": false, ""horas_extra"": 48, ""tarifa"": ""450""}",PERMITIDA|900.00
+NR-EXT-006,extension,RN-12,"Aviso 600 min antes, reservado=False, 3 h extra","{""anticipacion_min"": 600, ""reservado"": false, ""horas_extra"": 3, ""tarifa"": ""450""}",PERMITIDA|450.00
+NR-EXT-007,extension,RN-12,"Aviso 600 min antes, reservado=False, 25 h extra","{""anticipacion_min"": 600, ""reservado"": false, ""horas_extra"": 25, ""tarifa"": ""450""}",PERMITIDA|900.00
+NR-EXT-008,extension,RN-12,"Aviso 600 min antes, reservado=False, 0 h extra","{""anticipacion_min"": 600, ""reservado"": false, ""horas_extra"": 0, ""tarifa"": ""450""}",RECHAZADA
+NR-EXT-009,extension,RN-12,"Aviso 600 min antes, reservado=False, -5 h extra","{""anticipacion_min"": 600, ""reservado"": false, ""horas_extra"": -5, ""tarifa"": ""450""}",RECHAZADA
+NR-CAN-001,cancelacion,RN-11,"Rol AGENTE, PIN válido","{""rol"": ""AGENTE"", ""pin_valido"": true}",RECHAZADA
+NR-CAN-002,cancelacion,RN-11,"Rol AGENTE, PIN inválido","{""rol"": ""AGENTE"", ""pin_valido"": false}",RECHAZADA
+NR-CAN-003,cancelacion,RN-11,"Rol PATIO, PIN válido","{""rol"": ""PATIO"", ""pin_valido"": true}",RECHAZADA
+NR-CAN-004,cancelacion,RN-11,"Rol PATIO, PIN inválido","{""rol"": ""PATIO"", ""pin_valido"": false}",RECHAZADA
+NR-CAN-005,cancelacion,RN-11,"Rol LIMPIEZA, PIN válido","{""rol"": ""LIMPIEZA"", ""pin_valido"": true}",RECHAZADA
+NR-CAN-006,cancelacion,RN-11,"Rol LIMPIEZA, PIN inválido","{""rol"": ""LIMPIEZA"", ""pin_valido"": false}",RECHAZADA
+NR-CAN-007,cancelacion,RN-11,"Rol ADMINISTRACION, PIN válido","{""rol"": ""ADMINISTRACION"", ""pin_valido"": true}",AUTORIZADA
+NR-CAN-008,cancelacion,RN-11,"Rol ADMINISTRACION, PIN inválido","{""rol"": ""ADMINISTRACION"", ""pin_valido"": false}",RECHAZADA
+NR-INS-001,inspeccion,RN-04,"Esquema completado=True, 1 foto(s)","{""esquema"": true, ""fotos"": 1}",FIRMA_PERMITIDA
+NR-INS-002,inspeccion,RN-04,"Esquema completado=True, 3 foto(s)","{""esquema"": true, ""fotos"": 3}",FIRMA_PERMITIDA
+NR-INS-003,inspeccion,RN-04,"Esquema completado=True, 0 foto(s)","{""esquema"": true, ""fotos"": 0}",FIRMA_BLOQUEADA
+NR-INS-004,inspeccion,RN-04,"Esquema completado=False, 2 foto(s)","{""esquema"": false, ""fotos"": 2}",FIRMA_BLOQUEADA
+NR-INS-005,inspeccion,RN-04,"Esquema completado=False, 0 foto(s)","{""esquema"": false, ""fotos"": 0}",FIRMA_BLOQUEADA
+NR-VOU-001,voucher,RN-05,Licencia 'Ana Pérez' / tarjeta 'Ana Pérez',"{""titular_licencia"": ""Ana Pérez"", ""titular_tarjeta"": ""Ana Pérez""}",ACEPTADA
+NR-VOU-002,voucher,RN-05,Licencia 'Ana Pérez' / tarjeta 'ANA PÉREZ',"{""titular_licencia"": ""Ana Pérez"", ""titular_tarjeta"": ""ANA PÉREZ""}",ACEPTADA
+NR-VOU-003,voucher,RN-05,Licencia 'Ana Pérez' / tarjeta 'Luis Gómez',"{""titular_licencia"": ""Ana Pérez"", ""titular_tarjeta"": ""Luis Gómez""}",RECHAZADA
+NR-TRA-001,transicion_vehiculo,RN-13,DISPONIBLE + entregar,"{""estatus"": ""DISPONIBLE"", ""accion"": ""entregar""}",RENTADO
+NR-TRA-002,transicion_vehiculo,RN-13,DISPONIBLE + recibir_en_revision,"{""estatus"": ""DISPONIBLE"", ""accion"": ""recibir_en_revision""}",TRANSICION_INVALIDA
+NR-TRA-003,transicion_vehiculo,RN-13,DISPONIBLE + iniciar_limpieza,"{""estatus"": ""DISPONIBLE"", ""accion"": ""iniciar_limpieza""}",TRANSICION_INVALIDA
+NR-TRA-004,transicion_vehiculo,RN-13,DISPONIBLE + marcar_terminado,"{""estatus"": ""DISPONIBLE"", ""accion"": ""marcar_terminado""}",TRANSICION_INVALIDA
+NR-TRA-005,transicion_vehiculo,RN-13,DISPONIBLE + reportar_mantenimiento_mayor,"{""estatus"": ""DISPONIBLE"", ""accion"": ""reportar_mantenimiento_mayor""}",TRANSICION_INVALIDA
+NR-TRA-006,transicion_vehiculo,RN-13,RENTADO + entregar,"{""estatus"": ""RENTADO"", ""accion"": ""entregar""}",TRANSICION_INVALIDA
+NR-TRA-007,transicion_vehiculo,RN-13,RENTADO + recibir_en_revision,"{""estatus"": ""RENTADO"", ""accion"": ""recibir_en_revision""}",EN_REVISION
+NR-TRA-008,transicion_vehiculo,RN-13,RENTADO + iniciar_limpieza,"{""estatus"": ""RENTADO"", ""accion"": ""iniciar_limpieza""}",TRANSICION_INVALIDA
+NR-TRA-009,transicion_vehiculo,RN-13,RENTADO + marcar_terminado,"{""estatus"": ""RENTADO"", ""accion"": ""marcar_terminado""}",TRANSICION_INVALIDA
+NR-TRA-010,transicion_vehiculo,RN-13,RENTADO + reportar_mantenimiento_mayor,"{""estatus"": ""RENTADO"", ""accion"": ""reportar_mantenimiento_mayor""}",TRANSICION_INVALIDA
+NR-TRA-011,transicion_vehiculo,RN-13,EN_REVISION + entregar,"{""estatus"": ""EN_REVISION"", ""accion"": ""entregar""}",TRANSICION_INVALIDA
+NR-TRA-012,transicion_vehiculo,RN-13,EN_REVISION + recibir_en_revision,"{""estatus"": ""EN_REVISION"", ""accion"": ""recibir_en_revision""}",TRANSICION_INVALIDA
+NR-TRA-013,transicion_vehiculo,RN-13,EN_REVISION + iniciar_limpieza,"{""estatus"": ""EN_REVISION"", ""accion"": ""iniciar_limpieza""}",LIMPIEZA
+NR-TRA-014,transicion_vehiculo,RN-13,EN_REVISION + marcar_terminado,"{""estatus"": ""EN_REVISION"", ""accion"": ""marcar_terminado""}",TRANSICION_INVALIDA
+NR-TRA-015,transicion_vehiculo,RN-13,EN_REVISION + reportar_mantenimiento_mayor,"{""estatus"": ""EN_REVISION"", ""accion"": ""reportar_mantenimiento_mayor""}",TRANSICION_INVALIDA
+NR-TRA-016,transicion_vehiculo,RN-13,LIMPIEZA + entregar,"{""estatus"": ""LIMPIEZA"", ""accion"": ""entregar""}",TRANSICION_INVALIDA
+NR-TRA-017,transicion_vehiculo,RN-13,LIMPIEZA + recibir_en_revision,"{""estatus"": ""LIMPIEZA"", ""accion"": ""recibir_en_revision""}",TRANSICION_INVALIDA
+NR-TRA-018,transicion_vehiculo,RN-13,LIMPIEZA + iniciar_limpieza,"{""estatus"": ""LIMPIEZA"", ""accion"": ""iniciar_limpieza""}",TRANSICION_INVALIDA
+NR-TRA-019,transicion_vehiculo,RN-13,LIMPIEZA + marcar_terminado,"{""estatus"": ""LIMPIEZA"", ""accion"": ""marcar_terminado""}",DISPONIBLE
+NR-TRA-020,transicion_vehiculo,RN-13,LIMPIEZA + reportar_mantenimiento_mayor,"{""estatus"": ""LIMPIEZA"", ""accion"": ""reportar_mantenimiento_mayor""}",MANTENIMIENTO_MAYOR
+NR-TRA-021,transicion_vehiculo,RN-13,MANTENIMIENTO_MAYOR + entregar,"{""estatus"": ""MANTENIMIENTO_MAYOR"", ""accion"": ""entregar""}",TRANSICION_INVALIDA
+NR-TRA-022,transicion_vehiculo,RN-13,MANTENIMIENTO_MAYOR + recibir_en_revision,"{""estatus"": ""MANTENIMIENTO_MAYOR"", ""accion"": ""recibir_en_revision""}",TRANSICION_INVALIDA
+NR-TRA-023,transicion_vehiculo,RN-13,MANTENIMIENTO_MAYOR + iniciar_limpieza,"{""estatus"": ""MANTENIMIENTO_MAYOR"", ""accion"": ""iniciar_limpieza""}",TRANSICION_INVALIDA
+NR-TRA-024,transicion_vehiculo,RN-13,MANTENIMIENTO_MAYOR + marcar_terminado,"{""estatus"": ""MANTENIMIENTO_MAYOR"", ""accion"": ""marcar_terminado""}",TRANSICION_INVALIDA
+NR-TRA-025,transicion_vehiculo,RN-13,MANTENIMIENTO_MAYOR + reportar_mantenimiento_mayor,"{""estatus"": ""MANTENIMIENTO_MAYOR"", ""accion"": ""reportar_mantenimiento_mayor""}",TRANSICION_INVALIDA

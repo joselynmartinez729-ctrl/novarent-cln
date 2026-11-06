@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    env_file: .env
+    depends_on:
+      db: { condition: service_healthy }
+    ports: ["8000:8000"]
+  tests:
+    build: .
+    env_file: .env
+    profiles: ["test"]
+    depends_on:
+      db: { condition: service_healthy }
+    command: pytest --cov=src --cov-report=term-missing --cov-fail-under=80
+volumes:
+  pgdata:

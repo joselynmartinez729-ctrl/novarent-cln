@@ -5,7 +5,9 @@ from datetime import date
 from typing import Optional
 
 from fastapi import Depends, FastAPI, Query
-from fastapi.responses import JSONResponse
+from pathlib import Path
+from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from src.application.commands import DecisionDelCliente, EntregarVehiculoCommand, RegistrarDevolucionCommand
 from src.application.errors import NoEncontrado
@@ -153,3 +155,12 @@ def terminado(vehiculo_id: str, c: Container = Depends(C)):
           summary="CU-05: reporta Mantenimiento Mayor y cargo retroactivo (US13)")
 def mantenimiento_mayor(vehiculo_id: str, body: MantenimientoMayorIn, c: Container = Depends(C)):
     return asdict(c.limpieza.reportar_mantenimiento_mayor(vehiculo_id, body.motivo, body.monto_mxn))
+
+# Interfaz web (HTML + JavaScript) servida por la misma API: /ui 
+_WEB = Path(__file__).resolve().parents[2] / "web"
+if _WEB.is_dir():
+    app.mount("/ui", StaticFiles(directory=_WEB, html=True), name="ui")
+
+    @app.get("/", include_in_schema=False)
+    def _inicio(): return RedirectResponse("/ui/")
+    
